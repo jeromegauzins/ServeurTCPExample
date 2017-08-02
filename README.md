@@ -1,32 +1,63 @@
 # ServeurTCPExample
 Un exemple complet de la mise en place d'un serveur TCP en java
 
-# Coté Serveur
 
-=> Une fois la connexion etablit avec un client ou plusieurs:
+# Détection de serveur en TCP
+
+Lancer le code de detection du serveur coté serveur : 
+
 ```java
--  serveur.sendStringToAllClients(messageToSend); //pour envoyer un message a tout le monde
--  serveur.sendStringToClient(socket, messageToSend) // pour envoyer un message a un client en particulier
--  serveur.getSockets() //Retourne les sockets des clients actuellement connectés
--  serveur.getNbClientsConnected() //Retourne le nombre de clients connecte
-</code>
-=> Les listeners, pour etre notifier:
+//Premier parametre : Timeout avant de reessayer
+//Deuxième paramètre :  Nombre d'essai
+new DiscoverServerThread(2000,20).start(); //Lance le thread pour que les clients auto-détectent ce serveur
 ```
 
--  serveur.addOnClientConnectedListener(OnClientConnectedListener onClientConnectedListener);  // quand un client se connecte ou se deconnecte
- -  serveur.addSocketListener(SocketListener socketListener); // quand on recoit ou on emet un message
- </code>
+Lancer le code de detection du serveur coté client : 
+
+```java
+
+DiscoveryThread discoveryThread = new DiscoveryThread();
+discoveryThread.addOnServerDetectedListener(new OnServerDetectedListener(){
+   
+			@Override
+			public void onServerDetected(String ipAdress) {
+				   //L'adresse du serveur a été trouvé
+			    client = new Client(ipAdress,8887); // On cree un Nouveau client TCP
+				   client.addSocketListener(Main.this); // On ajouter un listener pour lire ce qui est envoyé et recu par ce client
+				   client.sendString("salut"); //On envoit 'salut' au serveur 
+
+			}});
+		
+		discoveryThread.start();// Lance la recherche du serveur
+ ```
+
+
+# Fonctions disponibles
+
+## Coté Serveur
+
+=> Une fois la connexion établit avec un client ou plusieurs:
+```java
+serveur.sendStringToAllClients(messageToSend); //pour envoyer un message a tout le monde
+serveur.sendStringToClient(socket, messageToSend) // pour envoyer un message a un client en particulier
+serveur.getSockets() //Retourne les sockets des clients actuellement connectés
+serveur.getNbClientsConnected() //Retourne le nombre de clients connecte
+```
+=> Les listeners, pour etre notifier:
+```java
+serveur.addOnClientConnectedListener(OnClientConnectedListener onClientConnectedListener);  // quand un client se connecte ou se deconnecte
+serveur.addSocketListener(SocketListener socketListener); // quand on recoit ou on emet un message
+```
  
- # Coté Client
+ ## Coté Client
 
 => Une fois la connexion etablit avec le serveur:
-<code>
--  serveur.sendString(messageToSend); //pour envoyer un message au serveur
-</code>
+```java
+serveur.sendString(messageToSend); //pour envoyer un message au serveur
+```
 => Les listeners, pour etre notifier:
-<code>
--  serveur.addSocketListener(SocketListener socketListener); // quand on recoit ou on emet un message
-
- </code>
+```java
+serveur.addSocketListener(SocketListener socketListener); // quand on recoit ou on emet un message
+```
 
 
