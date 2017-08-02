@@ -18,13 +18,13 @@ serveur.addSocketListener(new SocketListener(){
 		System.out.println("Message recu :"+message); //Message recu depuis un client
 
 	}} );
-serveur.start();
+serveur.start(); // On lance le serveur
 ```
 
 Sur la machine cliente : 
 ```java
-client = new Client(ipAdress,8887); // L'adresse ip du serveur (ou "localhost", si même machine), le port sur lequel le serveur est lancé
-client.sendString("salut");
+client = new Client(ipAdress,8887); // L'adresse ip du serveur (ou "localhost", si même machine), le port sur lequel le serveur est lancé. On se connecte au serveur
+client.sendString("salut"); // On envoie 'salut' au serveur TCP
 client.addSocketListener(new SocketListener(){
 
 	@Override
@@ -37,7 +37,6 @@ client.addSocketListener(new SocketListener(){
 		System.out.println("Message recu :"+message); //Message reçu depuis le serveur
 
 	}} );
-serveur.start();
 ```
 # Détection de serveur en UDP
 
