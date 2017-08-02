@@ -15,7 +15,7 @@ serveur.addSocketListener(new SocketListener(){
 
 	@Override
 	public void onMessageReceived(Socket socket, String message) {
-		System.out.println("Message recu :"+message); //Message recu par un client
+		System.out.println("Message recu :"+message); //Message recu depuis un client
 
 	}} );
 serveur.start();
@@ -25,7 +25,7 @@ Sur la machine cliente :
 ```java
 client = new Client(ipAdress,8887); // L'adresse ip du serveur (ou "localhost", si même machine), le port sur lequel le serveur est lancé
 client.sendString("salut");
-serveur.addSocketListener(new SocketListener(){
+client.addSocketListener(new SocketListener(){
 
 	@Override
 	public void onMessageSend(Socket socket, String message) {
@@ -34,7 +34,7 @@ serveur.addSocketListener(new SocketListener(){
 
 	@Override
 	public void onMessageReceived(Socket socket, String message) {
-		System.out.println("Message recu :"+message); //Message reçu par le serveur
+		System.out.println("Message recu :"+message); //Message reçu depuis le serveur
 
 	}} );
 serveur.start();
