@@ -55,17 +55,17 @@ Lancer le code de detection du serveur coté client :
 
 DiscoveryThread discoveryThread = new DiscoveryThread();
 discoveryThread.addOnServerDetectedListener(new OnServerDetectedListener(){
-   
-			@Override
-			public void onServerDetected(String ipAdress) {
-				   //L'adresse du serveur a été trouvé
-			    client = new Client(ipAdress,8887); // On cree un Nouveau client TCP
-				   client.addSocketListener(Main.this); // On ajouter un listener pour lire ce qui est envoyé et recu par ce client
-				   client.sendString("salut"); //On envoit 'salut' au serveur 
 
-			}});
-		
-		discoveryThread.start();// Lance la recherche du serveur
+	@Override
+	public void onServerDetected(String ipAdress) {
+		   //L'adresse du serveur a été trouvé
+	    client = new Client(ipAdress,8887); // On cree un Nouveau client TCP
+		   client.addSocketListener(Main.this); // On ajouter un listener pour lire ce qui est envoyé et recu par ce client
+		   client.sendString("salut"); //On envoit 'salut' au serveur 
+
+	}});
+
+discoveryThread.start();// Lance la recherche du serveur
  ```
 
 
