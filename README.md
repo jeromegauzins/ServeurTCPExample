@@ -18,7 +18,7 @@ serveur.addSocketListener(new SocketListener(){
 	public void onMessageReceived(Socket socket, String message) {
 		System.out.println("Message recu :"+message); //Message recu depuis un client
 		
-		server.sendStringToClient(socket,"Tais-toi sale client, je suis le serveur tout puissant !"); // On répond au client qui nous harcèle
+		serveur.sendStringToClient(socket,"Tais-toi sale client, je suis le serveur tout puissant !"); // On répond au client qui nous harcèle
 
 	}} );
 ```
