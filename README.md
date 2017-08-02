@@ -6,6 +6,7 @@ Un exemple complet de la mise en place d'un serveur TCP en java
 Sur la machine serveur : 
 ```java
 Serveur serveur = new Serveur(8887);//on lance le serveur sur le port 8887
+serveur.start(); // On lance le serveur
 serveur.addSocketListener(new SocketListener(){
 
 	@Override
@@ -16,9 +17,10 @@ serveur.addSocketListener(new SocketListener(){
 	@Override
 	public void onMessageReceived(Socket socket, String message) {
 		System.out.println("Message recu :"+message); //Message recu depuis un client
+		
+		server.send("Tais-toi sale client, je suis le serveur tout puissant !"); // On répond au client qui nous harcèle
 
 	}} );
-serveur.start(); // On lance le serveur
 ```
 
 Sur la machine cliente : 
@@ -35,7 +37,7 @@ client.addSocketListener(new SocketListener(){
 	@Override
 	public void onMessageReceived(Socket socket, String message) {
 		System.out.println("Message recu :"+message); //Message reçu depuis le serveur
-
+		client.sendStringToClient(socket,"Arrete de m'envoyer des messages serveur !! :)"); // On répond au serveur
 	}} );
 ```
 # Détection de serveur en UDP
@@ -53,18 +55,17 @@ Lancer le code de detection du serveur coté client :
 ```java
 
 DiscoveryThread discoveryThread = new DiscoveryThread();
+discoveryThread.start();// Lance la recherche du serveur
 discoveryThread.addOnServerDetectedListener(new OnServerDetectedListener(){
 
 	@Override
 	public void onServerDetected(String ipAdress) {
-		   //L'adresse du serveur a été trouvé
-	    client = new Client(ipAdress,8887); // On cree un Nouveau client TCP
-		   client.addSocketListener(Main.this); // On ajouter un listener pour lire ce qui est envoyé et recu par ce client
-		   client.sendString("salut"); //On envoit 'salut' au serveur 
+		//L'adresse du serveur a été trouvé
+		client = new Client(ipAdress,8887); // On cree un Nouveau client TCP
+		client.addSocketListener(Main.this); // On ajouter un listener pour lire ce qui est envoyé et recu par ce client
+		client.sendString("salut"); //On envoit 'salut' au serveur 
 
 	}});
-
-discoveryThread.start();// Lance la recherche du serveur
  ```
 
 
