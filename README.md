@@ -5,7 +5,7 @@ Un exemple complet de la mise en place d'un serveur TCP en java
 
 Sur la machine serveur : 
 ```java
-Serveur serveur = new Serveur(8887);//on lance le serveur sur le port 8887
+final Serveur serveur = new Serveur(8887);//on lance le serveur sur le port 8887
 serveur.start(); // On lance le serveur
 serveur.addSocketListener(new SocketListener(){
 
@@ -25,7 +25,7 @@ serveur.addSocketListener(new SocketListener(){
 
 Sur la machine cliente : 
 ```java
-client = new Client(ipAdress,8887); // L'adresse ip du serveur (ou "localhost", si même machine), le port sur lequel le serveur est lancé. On se connecte au serveur
+final Client client = new Client(ipAdress,8887); // L'adresse ip du serveur (ou "localhost", si même machine), le port sur lequel le serveur est lancé. On se connecte au serveur
 client.sendString("salut"); // On envoie 'salut' au serveur TCP
 client.addSocketListener(new SocketListener(){
 
