@@ -18,7 +18,7 @@ serveur.addSocketListener(new SocketListener(){
 	public void onMessageReceived(Socket socket, String message) {
 		System.out.println("Message recu :"+message); //Message recu depuis un client
 		
-		server.send("Tais-toi sale client, je suis le serveur tout puissant !"); // On répond au client qui nous harcèle
+		server.sendStringToClient(socket,"Tais-toi sale client, je suis le serveur tout puissant !"); // On répond au client qui nous harcèle
 
 	}} );
 ```
@@ -37,7 +37,7 @@ client.addSocketListener(new SocketListener(){
 	@Override
 	public void onMessageReceived(Socket socket, String message) {
 		System.out.println("Message recu :"+message); //Message reçu depuis le serveur
-		client.sendStringToClient(socket,"Arrete de m'envoyer des messages serveur !! :)"); // On répond au serveur
+		client.sendString("Arrete de m'envoyer des messages serveur !! :)"); // On répond au serveur
 	}} );
 ```
 # Détection de serveur en UDP
