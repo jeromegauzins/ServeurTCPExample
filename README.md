@@ -1,8 +1,45 @@
 # ServeurTCPExample
 Un exemple complet de la mise en place d'un serveur TCP en java
 
+# Communication en TCP Simple
 
-# Détection de serveur en TCP
+Sur la machine serveur : 
+```java
+Serveur serveur = new Serveur(8887);//on lance le serveur sur le port 8887
+serveur.addSocketListener(new SocketListener(){
+
+	@Override
+	public void onMessageSend(Socket socket, String message) {
+		System.out.println("Message envoyé :"+message); //Message envoyé à un client
+	}
+
+	@Override
+	public void onMessageReceived(Socket socket, String message) {
+		System.out.println("Message recu :"+message); //Message recu par un client
+
+	}} );
+serveur.start();
+```
+
+Sur la machine cliente : 
+```java
+client = new Client(ipAdress,8887); // L'adresse ip du serveur (ou "localhost", si même machine), le port sur lequel le serveur est lancé
+client.sendString("salut");
+serveur.addSocketListener(new SocketListener(){
+
+	@Override
+	public void onMessageSend(Socket socket, String message) {
+		System.out.println("Message envoyé :"+message); //Message envoyé au serveur
+	}
+
+	@Override
+	public void onMessageReceived(Socket socket, String message) {
+		System.out.println("Message recu :"+message); //Message reçu par le serveur
+
+	}} );
+serveur.start();
+```
+# Détection de serveur en UDP
 
 Lancer le code de detection du serveur coté serveur : 
 
