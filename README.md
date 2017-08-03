@@ -1,4 +1,4 @@
-# ServeurTCPExample
+# Serveur TCP
 Un exemple complet de la mise en place d'un serveur TCP en java
 
 # Communication en TCP Simple
